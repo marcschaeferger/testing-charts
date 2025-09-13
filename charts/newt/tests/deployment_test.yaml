@@ -1,0 +1,23 @@
+suite: Deployment rendering
+templates:
+  - templates/deployment.yaml
+tests:
+  - it: renders a Deployment when instance enabled
+    set:
+      newtInstances:
+        - name: main-tunnel
+          enabled: true
+          auth:
+            existingSecretName: newt-auth
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.labels["app.kubernetes.io/instance"]
+          value: RELEASE-NAME
+      - equal:
+          path: spec.selector.matchLabels["newt.instance"]
+          value: main-tunnel
+      - equal:
+          path: spec.template.metadata.labels["app.kubernetes.io/component"]
+          value: newt

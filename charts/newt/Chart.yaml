@@ -1,0 +1,34 @@
+apiVersion: v2
+version: 1.0.0
+appVersion: "1.4.4"
+kubeVersion: ">=1.28.15-0"
+name: newt
+description: Helm chart to deploy Newt (fosrl/newt) client instance
+type: application
+keywords:
+  - newt
+  - pangolin
+  - vpn
+  - wireguard
+  - networking
+home: https://digpangolin.com/
+icon: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+sources:
+  - https://github.com/fosrl/helm-charts
+  - https://github.com/fosrl/newt
+maintainers:
+  - name: marcschaeferger
+    email: info@marcschaeferger.de
+    url: https://github.com/marcschaeferger
+annotations:
+  artifacthub.io/category: networking
+  artifacthub.io/links: |
+    - name: source
+      url: https://github.com/fosrl/helm-charts/tree/main/charts/newt
+    - name: homepage
+      url: https://digpangolin.com/
+    - name: documentation
+      url: https://docs.digpangolin.com/self-host/manual/kubernetes
+  artifacthub.io/screenshots: |
+    - title: Newt
+      url: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg

@@ -1,0 +1,26 @@
+# Metrics values for Newt chart rendering
+# - Metrics enabled
+# - Metrics Service enabled
+# - ServiceMonitor enabled (PodMonitor disabled)
+# - PrometheusRule enabled
+
+newtInstances:
+  - name: main-tunnel
+    enabled: true
+    auth:
+      existingSecretName: newt-auth
+
+global:
+  metrics:
+    enabled: true
+    service:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+    podMonitor:
+      enabled: false
+    prometheusRule:
+      enabled: true
+  tests:
+    enabled: false
+

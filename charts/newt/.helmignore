@@ -1,0 +1,30 @@
+# Exclude duplicate/experimental schema files from chart packages
+# This supports shell glob matching, relative path matching, and
+# negation (prefixed with !). Only one pattern per line.
+# Common VCS dirs
+.git/
+.gitignore
+# Common backup files
+*.swp
+*.bak
+*.tmp
+*.orig
+*~
+# Various IDEs
+.project
+.idea/
+*.tmproj
+.vscode/
+# Specific to helm charts
+/tests
+/scripts
+.pre-commit-config.yaml
+.env-template
+.env
+.github
+.helmignore
+.schema.yaml
+README.md.gotmpl
+artifacthub-repo.yml
+Taskfile.yaml
+renovate.json

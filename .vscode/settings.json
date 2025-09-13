@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "**/charts/**/templates/**/*.{yaml,yml,tpl,gotmpl}": "helm",
+    "**/*.tpl": "helm",
+    "**/*.gotmpl": "helm"
+  },
+  "yaml.schemas": {
+    "${workspaceFolder}/charts/newt/values.schema.json": [
+      "charts/newt/values.yaml"
+    ],
+    "${workspaceFolder}/charts/pangolin/values.schema.json": [
+      "charts/pangolin/values.yaml"
+    ]
+  }
+}

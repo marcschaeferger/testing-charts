@@ -1,0 +1,32 @@
+# Newt Helm Chart
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+## ✨ Features
+
+- Env var or CLI flag configuration
+- Optional mTLS (PKCS12) secret mount
+- Optional up/down script injection
+- Native WireGuard (privileged) mode (opt-in)
+- Health file based probes & helm test Jobs
+- RBAC Role/ClusterRole (opt-in)
+- NetworkPolicy (opt-in)
+- Prometheus metrics, PodMonitor, ServiceMonitor, PrometheusRule (opt-in)
+- Multi-instance (array-driven) deployments with per-instance overrides
+
+## Prerequisites
+
+- Kubernetes >= 1.28.15
+- Helm 3.x
+- kubectl >= v1.28.15
+- Newt Credentials from Pangolin
+
+## Quick Start
+
+See [QUICKSTART-NEWT.md](../QUICKSTART-NEWT.md) for detailed instructions.
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "chart.maintainersSection" . }}

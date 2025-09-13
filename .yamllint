@@ -1,0 +1,12 @@
+extends: default
+rules:
+  line-length:
+    max: 120
+    level: warning
+  document-start:
+    present: false
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off', 'yes', 'no']
+  new-lines:
+    type: unix
+    level: warning

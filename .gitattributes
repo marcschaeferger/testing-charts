@@ -1,0 +1,11 @@
+# Normalize line endings across platforms
+* text=auto eol=lf
+
+# Enforce LF for YAML, templates, docs, and scripts
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.tpl  text eol=lf
+*.gotmpl text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.sh   text eol=lf
