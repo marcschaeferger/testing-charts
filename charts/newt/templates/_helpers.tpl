@@ -207,14 +207,7 @@ imagePullSecrets:
 - name: GENERATE_AND_SAVE_KEY_TO
   value: {{ $inst.generateAndSaveKeyTo | quote }}
 {{- end }}
-{{- range $k, $v := $inst.extraEnv }}
-- name: {{ $k }}
-  value: {{ $v | quote }}
-{{- end }}
-{{- range $k, $v := $root.Values.global.extraEnv }}
-- name: {{ $k }}
-  value: {{ $v | quote }}
-{{- end }}
+{{- include "newt.instance.extraEnv" (dict "root" $root "inst" $inst) }}
 {{- end }}
 
 {{- define "newt.instance.commandArgs" -}}
@@ -250,5 +243,19 @@ command:
 args:
 {{- range $args }}
   - {{ . | quote }}
+{{- end }}
+{{- end }}
+
+{{- /* Merged extra envs: instance overrides global; stable key order */ -}}
+{{- define "newt.instance.extraEnv" -}}
+{{- $root := .root -}}
+{{- $inst := .inst -}}
+{{- $g := (default (dict) $root.Values.global.extraEnv) -}}
+{{- $i := (default (dict) $inst.extraEnv) -}}
+{{- $merged := mergeOverwrite (deepCopy $g) $i -}}
+{{- $keys := keys $merged | sortAlpha -}}
+{{- range $k := $keys }}
+- name: {{ $k }}
+  value: {{ (index $merged $k) | quote }}
 {{- end }}
 {{- end }}
