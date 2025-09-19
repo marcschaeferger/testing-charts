@@ -19,4 +19,4 @@ jobs:
 
       - name: Lint Helm Chart
         run: |
-          helm lint charts/mein-chart
+          helm lint charts/newt
