@@ -1,6 +1,6 @@
 # Newt Helm Chart
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.4](https://img.shields.io/badge/AppVersion-1.4.4-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.0](https://img.shields.io/badge/AppVersion-1.5.0-informational?style=flat-square)
 
 Helm chart to deploy Newt (fosrl/newt) client instance
 
@@ -43,9 +43,9 @@ See [QUICKSTART-NEWT.md](../QUICKSTART-NEWT.md) for detailed instructions.
 | global.health.enabled | bool | `true` | Enable liveness/readiness probes (file existence) |
 | global.health.path | string | `"/tmp/healthy"` | Default health file path (instances can override with healthFile) |
 | global.health.readinessFailureThreshold | int | `3` | Readiness probe failure threshold |
-| global.image | object | `{"digest":"","imagePullPolicy":"Always","imagePullSecrets":[],"registry":"docker.io","repository":"fosrl/newt","tag":""}` | Global Docker image settings for all components in the Helm chart   |
+| global.image | object | `{"digest":"","imagePullPolicy":"IfNotPresent","imagePullSecrets":[],"registry":"docker.io","repository":"fosrl/newt","tag":""}` | Global Docker image settings for all components in the Helm chart   |
 | global.image.digest | string | `""` | Optional image digest (overrides tag) |
-| global.image.imagePullPolicy | string | `"Always"` | Global Docker image pull policy |
+| global.image.imagePullPolicy | string | `"IfNotPresent"` | Global Docker image pull policy |
 | global.image.imagePullSecrets | list | `[]` | Global Docker registry secret |
 | global.image.registry | string | `"docker.io"` | Global Docker image registry |
 | global.image.repository | string | `"fosrl/newt"` | Global Docker image repository |
@@ -101,6 +101,11 @@ See [QUICKSTART-NEWT.md](../QUICKSTART-NEWT.md) for detailed instructions.
 | global.nodeSelector | object | `{}` | Node selector applied to all pods |
 | global.notes.defaultTraefikTarget | string | `"traefik.kube-system.svc.cluster.local:80"` | Default internal Traefik target used in NOTES output |
 | global.podAnnotations | object | `{}` | Annotations to add to all Pod resources |
+| global.podDisruptionBudget | object | `{"annotations":{},"enabled":false,"labels":{},"maxUnavailable":"","minAvailable":1}` | PodDisruptionBudget for production deployments (optional, disabled by default) |
+| global.podDisruptionBudget.annotations | object | `{}` | Additional annotations for PodDisruptionBudget |
+| global.podDisruptionBudget.labels | object | `{}` | Additional labels for PodDisruptionBudget |
+| global.podDisruptionBudget.maxUnavailable | string | `""` | Maximum unavailable pods during disruptions (cannot be used with minAvailable) |
+| global.podDisruptionBudget.minAvailable | int | `1` | Minimum available pods during disruptions (cannot be used with maxUnavailable) |
 | global.podLabels | object | `{}` | Labels to add to all Pod resources |
 | global.podSecurityContext | object | `{}` | Pod-level securityContext override |
 | global.priorityClassName | string | `""` | Priority class name applied to all pods |
@@ -123,7 +128,7 @@ See [QUICKSTART-NEWT.md](../QUICKSTART-NEWT.md) for detailed instructions.
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy (fallback when global.image.imagePullPolicy not set) |
 | image.repository | string | `""` | Container image repository (fallback; prefer global.image) |
 | image.tag | string | `""` | Image tag (ignored if digest is set) |
-| newtInstances[0].acceptClients | bool | `false` | Accept client connections (creates a Service when enabled; omitted defaults to false at template time) |
+| newtInstances[0].acceptClients | bool | `false` | Accept client connections for runtime only (ACCEPT_CLIENTS env). Does NOT create any Service; Service is controlled by newtInstances[x].service.enabled |
 | newtInstances[0].affinity | object | `{}` | Pod affinity and anti-affinity |
 | newtInstances[0].allowGlobalOverride | bool | `false` | Allow this instance to override global settings (image, logLevel, etc) |
 | newtInstances[0].auth.existingSecretName | string | `""` | Name of the existing Secret with endpoint/id/secret keys |
@@ -196,6 +201,11 @@ See [QUICKSTART-NEWT.md](../QUICKSTART-NEWT.md) for detailed instructions.
 | serviceAccount.automountServiceAccountToken | bool | `false` | Control automounting of the ServiceAccount token on pods |
 | serviceAccount.create | bool | `false` | Create a dedicated ServiceAccount |
 | serviceAccount.name | string | `""` | ServiceAccount name (empty = auto-generated when create=true, else default) |
+
+## Service exposure vs. acceptClients
+
+- Service resources are controlled by `newtInstances[x].service.enabled`.
+- `acceptClients` only influences runtime behavior (sets `ACCEPT_CLIENTS=true` env or `--accept-clients` flag) and does not create or remove any Service.
 
 ## Maintainers
 

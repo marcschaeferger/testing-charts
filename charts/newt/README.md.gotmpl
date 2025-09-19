@@ -29,4 +29,9 @@ See [QUICKSTART-NEWT.md](../QUICKSTART-NEWT.md) for detailed instructions.
 
 {{ template "chart.valuesSection" . }}
 
+## Service exposure vs. acceptClients
+
+- Service resources are controlled by `newtInstances[x].service.enabled`.
+- `acceptClients` only influences runtime behavior (sets `ACCEPT_CLIENTS=true` env or `--accept-clients` flag) and does not create or remove any Service.
+
 {{ template "chart.maintainersSection" . }}
