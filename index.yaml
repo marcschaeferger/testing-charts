@@ -14,6 +14,44 @@ entries:
         - title: Newt
           url: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
     apiVersion: v2
+    appVersion: 1.5.0
+    created: "2025-09-19T19:38:58.129575556Z"
+    description: Helm chart to deploy Newt (fosrl/newt) client instance
+    digest: e2b81cc06c8fccccacfd44441435333375cfee818daf193190e16b1e40b67c13
+    home: https://digpangolin.com/
+    icon: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+    keywords:
+    - newt
+    - pangolin
+    - vpn
+    - wireguard
+    - networking
+    kubeVersion: '>=1.28.15-0'
+    maintainers:
+    - email: info@marcschaeferger.de
+      name: marcschaeferger
+      url: https://github.com/marcschaeferger
+    name: newt
+    sources:
+    - https://github.com/fosrl/helm-charts
+    - https://github.com/fosrl/newt
+    type: application
+    urls:
+    - newt-1.1.0.tgz
+    version: 1.1.0
+  - annotations:
+      artifacthub.io/category: networking
+      artifacthub.io/links: |
+        - name: source
+          url: https://github.com/fosrl/helm-charts/tree/main/charts/newt
+        - name: homepage
+          url: https://digpangolin.com/
+        - name: documentation
+          url: https://docs.digpangolin.com/self-host/manual/kubernetes
+      artifacthub.io/screenshots: |-
+        - title: Newt
+          url: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+    apiVersion: v2
     appVersion: 1.4.4
     created: "2025-09-13T20:11:27.726375735Z"
     description: Helm chart to deploy Newt (fosrl/newt) client instance
@@ -39,4 +77,4 @@ entries:
     urls:
     - newt-1.0.0.tgz
     version: 1.0.0
-generated: "2025-09-13T20:11:27.726398217Z"
+generated: "2025-09-19T19:38:58.129591005Z"
