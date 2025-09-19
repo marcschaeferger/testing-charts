@@ -158,6 +158,17 @@
             }
           }
         },
+        "podDisruptionBudget": {
+          "type": "object",
+          "description": "Optional PodDisruptionBudget for all instances (per-instance selector).",
+          "properties": {
+            "enabled": {"type": "boolean", "description": "Enable PodDisruptionBudget creation."},
+            "minAvailable": {"oneOf": [{"type": "integer"}, {"type": "string"}], "description": "Minimum available pods (int or percentage)."},
+            "maxUnavailable": {"oneOf": [{"type": "integer"}, {"type": "string"}], "description": "Maximum unavailable pods (int or percentage)."},
+            "labels": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Additional PDB labels."},
+            "annotations": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Additional PDB annotations."}
+          }
+        },
         "metrics": {
           "type": "object",
           "description": "Metrics / Prometheus scrape settings",
@@ -241,14 +252,13 @@
               "if": {"properties": {"serviceMonitor": {"properties": {"enabled": {"const": true}}}}},
               "then": {
                 "properties": {
-                  "service": {"properties": {"enabled": {"const": true}}, "required": ["enabled"]},
-                  "serviceMonitor": {"required": ["apiVersion", "namespace"]}
+                  "service": {"properties": {"enabled": {"const": true}}, "required": ["enabled"]}
                 }
               }
             },
             {
               "if": {"properties": {"podMonitor": {"properties": {"enabled": {"const": true}}}}},
-              "then": {"properties": {"podMonitor": {"required": ["apiVersion", "namespace"]}}}
+              "then": {"properties": {}}
             }
           ]
         }
