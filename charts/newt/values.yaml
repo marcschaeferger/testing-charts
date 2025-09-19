@@ -19,7 +19,7 @@ global:
     # -- Optional image digest (overrides tag)
     digest: ""
     # -- Global Docker image pull policy
-    imagePullPolicy: Always # @schema enum: [Always, IfNotPresent, Never]
+    imagePullPolicy: IfNotPresent # @schema enum: [Always, IfNotPresent, Never]
     # -- Global Docker registry secret
     imagePullSecrets: [] # @schema type:[array, null] ; item: object ; itemProperties: {"name": {"type": "string"}}
 
@@ -69,6 +69,18 @@ global:
   tolerations: [] # @schema type: array
   # -- affinity rules for all components
   affinity: {} # @schema type: object
+
+  # -- PodDisruptionBudget for production deployments (optional, disabled by default)
+  podDisruptionBudget:
+    enabled: false
+    # -- Minimum available pods during disruptions (cannot be used with maxUnavailable)
+    minAvailable: 1
+    # -- Maximum unavailable pods during disruptions (cannot be used with minAvailable)
+    maxUnavailable: ""
+    # -- Additional annotations for PodDisruptionBudget
+    annotations: {}
+    # -- Additional labels for PodDisruptionBudget
+    labels: {}
   # -- Pod-level securityContext override
   podSecurityContext: {} # @schema type: object
   # -- Container-level securityContext override
@@ -259,7 +271,7 @@ newtInstances:
     pingInterval: ""
     # -- Optional ping timeout (e.g., "5s"). Leave empty to use default
     pingTimeout: ""
-    # -- Accept client connections (creates a Service when enabled; omitted defaults to false at template time)
+    # -- Accept client connections for runtime only (ACCEPT_CLIENTS env). Does NOT create any Service; Service is controlled by newtInstances[x].service.enabled
     acceptClients: false
     # -- Use native WireGuard kernel interface (requires nativeMode.enabled=true and privileged)
     useNativeInterface: false
