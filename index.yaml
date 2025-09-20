@@ -19,6 +19,48 @@ entries:
         url: https://charts.fossorial.de/pgp_keys.asc
     apiVersion: v2
     appVersion: 1.5.0
+    created: "2025-09-20T10:45:26.11077703Z"
+    description: Helm chart to deploy Newt (fosrl/newt) client instance
+    digest: e23e0a30c886cec1f51cdb02db2716ec5c52e8537a33d99388bf7ba025afa703
+    home: https://digpangolin.com/
+    icon: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+    keywords:
+    - newt
+    - pangolin
+    - vpn
+    - wireguard
+    - networking
+    kubeVersion: '>=1.28.15-0'
+    maintainers:
+    - email: info@marcschaeferger.de
+      name: marcschaeferger
+      url: https://github.com/marcschaeferger
+    name: newt
+    sources:
+    - https://github.com/fosrl/helm-charts
+    - https://github.com/fosrl/newt
+    type: application
+    urls:
+    - newt-1.1.3.tgz
+    version: 1.1.3
+  - annotations:
+      artifacthub.io/category: networking
+      artifacthub.io/changes: |
+        - kind: changed
+          description: Bump newt to 1.1.2
+      artifacthub.io/links: |
+        - name: homepage
+          url: https://digpangolin.com/
+        - name: documentation
+          url: https://docs.digpangolin.com/self-host/manual/kubernetes
+      artifacthub.io/screenshots: |
+        - title: Newt
+          url: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+      artifacthub.io/signKey: |
+        fingerprint: E01F1FB369EEC787AE742E0602CC5FC942E8A7A6
+        url: https://charts.fossorial.de/pgp_keys.asc
+    apiVersion: v2
+    appVersion: 1.5.0
     created: "2025-09-20T09:33:56.031596044Z"
     description: Helm chart to deploy Newt (fosrl/newt) client instance
     digest: 645abe750074c1795920adebb632019f53c997f3f9ffa2b07169c48ee68a8cfc
@@ -157,4 +199,4 @@ entries:
     urls:
     - newt-1.0.0.tgz
     version: 1.0.0
-generated: "2025-09-20T09:33:56.031617565Z"
+generated: "2025-09-20T10:45:26.110821814Z"
