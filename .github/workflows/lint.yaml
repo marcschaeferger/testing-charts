@@ -1,0 +1,25 @@
+name: Lint ArtifactHub Helm Chart
+
+on:
+  pull_request:
+    paths:
+      - 'charts/newt/**'
+  push:
+    branches:
+      - main
+      - release-**
+    paths:
+      - 'charts/newt/**'
+
+jobs:
+  linter-artifacthub:
+    runs-on: ubuntu-latest
+    container:
+      image: artifacthub/ah
+      options: --user 1001
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run ArtifactHub lint
+        working-directory: ./charts/newt
+        run: ah lint
