@@ -1,0 +1,61 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+annotations:
+  artifacthub.io/category: networking
+  artifacthub.io/changes: |
+    - kind: changed
+      description: Bump newt to 1.1.2
+  artifacthub.io/links: |
+    - name: homepage
+      url: https://digpangolin.com/
+    - name: documentation
+      url: https://docs.digpangolin.com/self-host/manual/kubernetes
+  artifacthub.io/screenshots: |
+    - title: Newt
+      url: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+  artifacthub.io/signKey: |
+    fingerprint: E01F1FB369EEC787AE742E0602CC5FC942E8A7A6
+    url: https://charts.fossorial.de/pgp_keys.asc
+apiVersion: v2
+appVersion: 1.5.0
+description: Helm chart to deploy Newt (fosrl/newt) client instance
+home: https://digpangolin.com/
+icon: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+keywords:
+- - newt
+- - pangolin
+- - vpn
+- - wireguard
+- - networking
+kubeVersion: '>=1.28.15-0'
+maintainers:
+- - email: info@marcschaeferger.de
+  name: marcschaeferger
+  url: https://github.com/marcschaeferger
+name: newt
+sources:
+- - https://github.com/fosrl/helm-charts
+- - https://github.com/fosrl/newt
+type: application
+version: 1.1.2
+
+...
+files:
+  newt-1.1.2.tgz: sha256:645abe750074c1795920adebb632019f53c997f3f9ffa2b07169c48ee68a8cfc
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCgAQBQJoznUACRACzF/JQuinpgAAFeQQAK2R3fsvb257Hr6UVKq/twkL
+IzIK3ImQ/2DYIWe6unTrOS6v0/HZJZ+QIGSdCN5qPTQRahIAYhPK39d3jhgr9Mrv
+NorCmnmnt5pHjeLI/hPjCqXJM02KFmlCmgJX/++NtXvfm0MexUe6E4CVmMXfgcxY
+1PIIwoWP1NKZLUev/fIA5Io3JhhHhzFdTNOSFu2zuPLg73t+b70nyX6ggCBSg9oW
+ajXxtJluGjALLvEG4pmhvgiGn6ad5OJgK0ZQ4fEUJke1ytFMQHUHEE0TrXCIH1zv
+5QXuVyL4A+QtjDw+pvgO6cft9NkRNAOqkpGWIYFDZOzTv5aMa2272BiPNm3/RF/L
+O3TpLs63hurmo8zgAglKE+0r3dZW7Pf+d2uP7d2lHHNaEkJF9pMcwBcXhmAmmFgg
+AdV1eIgDPPXpv6Xu4rmtBCdbpRFK+JwZJC2yODF4WlPqVRZQgQJqr5bMVIpwjqlx
+4ekt+Io5spPBHiWe8vo6CcAGyJW7XjBvLa+KRyD+tQ7Mx5unrGyt8BZx5hVYqU+b
+frMlMfp3gnzaFjVbJbSSSr+gk81trfX6DcN4Z518A02H2Yf39tQLm2tOxEMNOD9t
+BGY4/vJSqWYFqH9g1N4kJOG2r8kms5BOv8jPVDa/ckrc0jFZ+Fx5kFdUXVFnzYC/
+hVEsyR8two9LFOwiqEBO
+=gaCc
+-----END PGP SIGNATURE-----
