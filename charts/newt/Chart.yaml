@@ -1,5 +1,5 @@
 apiVersion: v2
-version: 1.1.1
+version: 1.1.2
 appVersion: "1.5.0"
 kubeVersion: ">=1.28.15-0"
 name: newt
@@ -23,8 +23,6 @@ maintainers:
 annotations:
   artifacthub.io/category: networking
   artifacthub.io/links: |
-    - name: source
-      url: https://github.com/fosrl/helm-charts/tree/main/charts/newt
     - name: homepage
       url: https://digpangolin.com/
     - name: documentation
@@ -32,3 +30,9 @@ annotations:
   artifacthub.io/screenshots: |
     - title: Newt
       url: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+  artifacthub.io/signKey: |
+    fingerprint: E01F1FB369EEC787AE742E0602CC5FC942E8A7A6
+    url: https://charts.fossorial.de/pgp_keys.asc
+  artifacthub.io/changes: |
+    - kind: changed
+      description: Bump newt to 1.1.2
