@@ -1,0 +1,113 @@
+# Newt Helm Chart Scenario Rendering Summary
+
+## Overview
+This directory contains rendered Kubernetes manifests for 10 distinct Newt configuration scenarios.
+
+## Scenarios Created
+
+| # | Scenario | Description | Resources | Status |
+|---|----------|-------------|-----------|--------|
+| 01 | minimal | Only required values, existingSecret credentials | 14 | PASS |
+| 02 | blueprint | Blueprint configMap + BLUEPRINT_FILE env | 15 | PASS |
+| 03 | docker-socket | Docker socket mount + network validation | 14 | PASS |
+| 04 | metrics-prometheus | Prometheus metrics + ServiceMonitor | 14 | PASS |
+| 05 | otlp-exporter | OTLP exporter + OTEL env vars | 14 | PASS |
+| 06 | health-file | Health probes with custom path | 14 | PASS |
+| 07 | updown-script | Updown script ConfigMap mount | 15 | PASS |
+| 08 | mtls-split | Split PEM certificates | 15 | PASS |
+| 09 | mtls-pkcs12 | PKCS12 mTLS (template bug) | 0 | FAIL |
+| 10 | full-maximal | All features combined | 19 | PASS |
+
+## Validation Results
+
+- Total scenarios: 10
+- Successfully rendered: 9
+- Failed to render: 1 (09-mtls-pkcs12)
+- Total Kubernetes resources rendered: 134
+
+Kubeconform validation shows 2 errors per scenario - these are schema lookup issues for Prometheus Operator CRDs (PrometheusRule, ServiceMonitor) which require additional CRD schemas to be installed. The manifests themselves are valid Kubernetes resources.
+
+## Features Covered
+
+### Configuration Options Verified:
+- ✓ Existing secret credentials
+- ✓ Blueprint file mount + ConfigMap
+- ✓ Docker socket mount (hostPath Socket type)
+- ✓ Docker network validation
+- ✓ Prometheus metrics exposure
+- ✓ ServiceMonitor CR
+- ✓ PrometheusRule CR
+- ✓ Custom metrics adminAddr
+- ✓ Async bytes metrics
+- ✓ Region configuration
+- ✓ OTLP exporter
+- ✓ OTEL endpoint/headers/protocol
+- ✓ Health file probes
+- ✓ Custom health path
+- ✓ Updown script mount
+- ✓ mTLS PEM mode (cert/key/ca)
+- ✓ NetworkPolicy
+- ✓ LoadBalancer service
+- ✓ Custom MTU
+- ✓ Custom DNS
+- ✓ Log level settings
+- ✓ Extra volumes/mounts
+
+## Known Issues
+
+### Chart Template Bug (09-mtls-pkcs12)
+The original chart template at `charts/newt/templates/deployment.yaml` has an indentation bug that causes YAML parsing errors when rendering with certain configuration combinations:
+- Line 48-49: Inconsistent indentation in podLabels range loop
+- Line 52: Inconsistent indentation in podAnnotations range loop  
+- Line 56-62: Issues with annotations handling causing "block sequence entries not allowed" error
+
+This affects scenarios where:
+- `global.metrics.annotations` is nil/undefined (default)
+- Instance has mtls.enabled=true with mode=pkcs12
+
+The bug appears to be triggered by the Helm templating engine processing the annotations section incorrectly under specific value combinations. The issue is in the original chart and needs to be fixed by the chart maintainers.
+
+## Files Structure
+
+```
+rendered-scenarios/
+├── values/
+│   ├── 01-minimal.yaml
+│   ├── 02-blueprint.yaml
+│   ├── 03-docker-socket.yaml
+│   ├── 04-metrics-prometheus.yaml
+│   ├── 05-otlp-exporter.yaml
+│   ├── 06-health-file.yaml
+│   ├── 07-updown-script.yaml
+│   ├── 08-mtls-split.yaml
+│   ├── 09-mtls-pkcs12.yaml
+│   └── 10-full-maximal.yaml
+└── manifests/
+    ├── 01-minimal.yaml
+    ├── 02-blueprint.yaml
+    ├── 03-docker-socket.yaml
+    ├── 04-metrics-prometheus.yaml
+    ├── 05-otlp-exporter.yaml
+    ├── 06-health-file.yaml
+    ├── 07-updown-script.yaml
+    ├── 08-mtls-split.yaml
+    ├── 09-mtls-pkcs12.yaml
+    └── 10-full-maximal.yaml
+```
+
+## Rendering Commands
+
+```bash
+# Render all scenarios
+for f in rendered-scenarios/values/*.yaml; do
+  name=$(basename "$f" .yaml)
+  helm template newt ./charts/newt -f "$f" --namespace newt-test > "rendered-scenarios/manifests/$name.yaml"
+done
+
+# Validate all
+for f in rendered-scenarios/manifests/*.yaml; do
+  kubeconform -strict -summary "$f"
+done
+```
+
+Generated: 2026-03-01

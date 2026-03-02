@@ -1,29 +1,41 @@
-{{- if .Values.global.podDisruptionBudget.enabled }}
-{{- range $i, $inst := .Values.newtInstances }}
+{{- $root := . -}}
+{{- $gPdb := $root.Values.global.podDisruptionBudget }}
+{{- if $gPdb.enabled }}
+{{- range $i, $inst := $root.Values.newtInstances }}
 {{- if $inst.enabled }}
+{{- $instPdb := (default (dict) $inst.podDisruptionBudget) -}}
+{{- $pdbEnabled := (get $instPdb "enabled") -}}
+{{- if or (eq $pdbEnabled nil) $pdbEnabled }}
+{{- $minAvail := coalesce (get $instPdb "minAvailable") $gPdb.minAvailable -}}
+{{- $maxAvail := coalesce (get $instPdb "maxUnavailable") $gPdb.maxUnavailable -}}
+{{- if and $minAvail $maxAvail }}
+{{- fail "Cannot specify both minAvailable and maxUnavailable in PodDisruptionBudget. Choose one." }}
+{{- end }}
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: {{ include "newt.instance.fullname" (dict "root" $ "inst" $inst) }}-pdb
+  name: {{ include "newt.instance.fullname" (dict "root" $root "inst" $inst) }}-pdb
   labels:
-    {{- include "newt.labels" $ | nindent 4 }}
+    {{- include "newt.labels" $root | nindent 4 }}
     newt.instance: {{ $inst.name }}
-  {{- with $.Values.global.podDisruptionBudget.annotations }}
+  {{- $mergedAnns := mergeOverwrite (deepCopy (default dict $gPdb.annotations)) (default dict (get $instPdb "annotations")) -}}
+  {{- if gt (len $mergedAnns) 0 }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+    {{- toYaml $mergedAnns | nindent 4 }}
   {{- end }}
 spec:
-  {{- with $.Values.global.podDisruptionBudget.minAvailable }}
+  {{- with $minAvail }}
   minAvailable: {{ . }}
   {{- end }}
-  {{- with $.Values.global.podDisruptionBudget.maxUnavailable }}
+  {{- with $maxAvail }}
   maxUnavailable: {{ . }}
   {{- end }}
   selector:
     matchLabels:
-      app.kubernetes.io/instance: {{ $.Release.Name }}
+      app.kubernetes.io/instance: {{ $root.Release.Name }}
       newt.instance: {{ $inst.name }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
