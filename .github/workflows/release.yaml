@@ -1,6 +1,8 @@
 name: Release Charts
-permissions: 
+permissions:
   contents: write
+  pages: write
+  id-token: write
 
 on:
   push:
@@ -14,6 +16,8 @@ jobs:
   release:
     permissions:
       contents: write
+      pages: write
+      id-token: write
     runs-on: ubuntu-24.04
 
     steps:
@@ -31,6 +35,14 @@ jobs:
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
           version: v3.12.0
+
+      - name: Check signing & publish secrets
+        run: |
+          # Fail early if no signing/publish secrets are configured. This surfaces misconfiguration
+          if [ -z "${{ secrets.CR_KEY }}" ] && [ -z "${{ secrets.GPG_KEYRING_BASE64 }}" ]; then
+            echo "Missing required signing secret: either CR_KEY or GPG_KEYRING_BASE64 must be set in repository secrets" >&2
+            exit 1
+          fi
 
       - name: Prepare GPG key
         run: |
@@ -58,6 +70,7 @@ jobs:
           skip_existing: true
           packages_with_index: true
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          # Use the workflow token; CR_KEY may be omitted when using a keyring approach
+          CR_TOKEN: "${{ github.token }}"
           CR_KEY: "${{ secrets.CR_KEY }}"
           CR_SIGN: true
