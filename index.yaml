@@ -4,6 +4,63 @@ entries:
   - annotations:
       artifacthub.io/category: networking
       artifacthub.io/changes: |
+        - kind: fixed
+          description: "Fix Helm Chart Provenance/Signing on ArtifactHub not visible"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: newt-dockerhub
+          image: docker.io/fosrl/newt:1.10.1
+          whitelisted: false
+          platforms:
+            - linux/amd64
+            - linux/arm64
+            - linux/arm/v7
+        - name: newt-ghcr
+          image: ghcr.io/fosrl/newt:1.10.1
+          whitelisted: false
+          platforms:
+            - linux/amd64
+            - linux/arm64
+            - linux/arm/v7
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: support
+          url: https://github.com/fosrl/helm-charts/issues
+        - name: documentation
+          url: https://docs.digpangolin.com/self-host/manual/kubernetes
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/signKey: |
+        fingerprint: E01F1FB369EEC787AE742E0602CC5FC942E8A7A6
+        url: https://charts.fossorial.de/pgp_keys.asc
+    apiVersion: v2
+    appVersion: 1.10.1
+    created: "2026-03-03T00:05:06.753874258Z"
+    description: Helm chart to deploy Newt (fosrl/newt) client instance
+    digest: 855e275dc40356c9228d508edd26cea2965bc1d8c6e53e7b05869cb9c968ac9f
+    home: https://digpangolin.com/
+    icon: https://raw.githubusercontent.com/fosrl/pangolin/refs/heads/main/public/logo/pangolin_orange.svg
+    keywords:
+    - newt
+    - pangolin
+    - vpn
+    - wireguard
+    - networking
+    kubeVersion: '>=1.30.14-0'
+    maintainers:
+    - email: info@marcschaeferger.de
+      name: marcschaeferger
+      url: https://github.com/marcschaeferger
+    name: newt
+    sources:
+    - https://github.com/fosrl/helm-charts
+    - https://github.com/fosrl/newt
+    type: application
+    urls:
+    - newt-1.3.1.tgz
+    version: 1.3.1
+  - annotations:
+      artifacthub.io/category: networking
+      artifacthub.io/changes: |
         - kind: changed
           description: "Bump Chart version to 1.3.0 and Chart AppVersion to Newt v1.10.1 with full Newt 1.10.1 support."
         - kind: changed
@@ -300,4 +357,4 @@ entries:
     urls:
     - newt-1.0.0.tgz
     version: 1.0.0
-generated: "2026-03-02T17:35:59.989637752Z"
+generated: "2026-03-03T00:05:06.753937097Z"
